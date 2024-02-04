@@ -1,23 +1,19 @@
 import { Router } from "express";
-import { createEvent, deleteEvent } from "../controller/event.controlller";
-// import {
-//   createEvent,
-//   getAllEvents,
-//   getEventById,
-//   getEventsByUserId,
-//   getEventsNearMe,
-//   searchEvents,
-// } from "../controllers/event.js";
-// import { authGuard } from "../middleware/index.js";
+import {
+  createEvent,
+  deleteEvent,
+  getEvent,
+  getEvents,
+  updateEvent,
+} from "../controller/event.controlller";
+import { authMiddleware } from "../middleware/authMiddleware";
 
 const eventRouter = Router();
-
+eventRouter.use(authMiddleware);
 eventRouter.post("", createEvent);
 eventRouter.delete("/:id", deleteEvent);
-eventRouter.get("");
-eventRouter.get("/users");
-eventRouter.get("/locations");
-eventRouter.get("/search");
-eventRouter.get("/:eventId");
+eventRouter.put("/:id", updateEvent);
+eventRouter.get("/:id", getEvent);
+eventRouter.get("", getEvents);
 
 export { eventRouter };

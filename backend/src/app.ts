@@ -2,11 +2,14 @@ import express from "express";
 import "dotenv/config";
 import connectToDatabase from "./config/database";
 import { authRouter, eventRouter } from "./router";
+import cookieParser from "cookie-parser";
 import { errorHandler } from "./middleware";
 // Now you can use authRouter and eventRouter in your code
 
 const app = express();
 const PORT = process.env.PORT || 3001;
+
+app.use(cookieParser());
 
 app.use(express.json());
 
