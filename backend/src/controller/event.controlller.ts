@@ -9,14 +9,17 @@ import {
 
 const createEvent = async (req: Request, res: Response, next: NextFunction) => {
   try {
-    const createdEvent = await insertEvent({
-      ...req.body,
-      startDate: new Date(req.body.startDate),
-      endDate: new Date(req.body.endDate),
-    });
-    return res.status(201).json({ success: true, ...createdEvent });
+    await insertEvent(
+      {
+        ...req.body,
+        startDate: new Date(req.body.startDate),
+        endDate: new Date(req.body.endDate),
+      },
+      next
+    );
+    return res.status(201).send({ success: true, message: "Event Created" });
   } catch (error) {
-    return next(error.message);
+    return next(error);
   }
 };
 
@@ -28,12 +31,12 @@ const deleteEvent = async (req: Request, res: Response, next: NextFunction) => {
     if (!eventId) {
       return res
         .status(400)
-        .json({ success: false, message: "Event ID is required" });
+        .send({ success: false, message: "Event ID is required" });
     }
     await removeEvent(eventId);
-    return res.status(204).json({ success: true, message: "Deleted Event" });
+    return res.status(204).send({ success: true, message: "Deleted Event" });
   } catch (error) {
-    return next(error.message);
+    return next(error);
   }
 };
 
@@ -74,8 +77,8 @@ const getEvent = async (req: Request, res: Response, next: NextFunction) => {
 };
 const getEvents = async (req: Request, res: Response, next: NextFunction) => {
   try {
-    const event = await getEventsRepository({});
-    return res.status(200).json({ success: true, ...event });
+    const events = await getEventsRepository({});
+    return res.status(200).send({ success: true, events });
   } catch (error) {
     return next(error);
   }
