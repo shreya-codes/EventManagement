@@ -1,11 +1,13 @@
 import mongoose from "mongoose";
 import validator from "validator";
+import { APIError } from "../error/error";
+import { ErrorMap } from "../constants/error.constants";
 
 export interface IEvent {
   _id: string;
   name: string;
-  description: string;
-  location: string;
+  description?: string;
+  location?: string;
   startDate: Date;
   endDate: Date;
   deleted?: boolean;
@@ -14,17 +16,17 @@ export interface IEvent {
 
 const eventSchema = new mongoose.Schema<IEvent>({
   name: { type: String, required: true },
-  description: { type: String, required: true },
-  location: { type: String, required: true },
+  description: { type: String },
+  location: { type: String },
   startDate: {
     type: Date,
     required: true,
     validate: {
       validator: function (value) {
-        console.log(validator.isDate(value));
-
         if (!validator.isDate(value)) {
-          throw new Error("Invalid date format for startDate");
+          throw new APIError(
+            ErrorMap.ValidationError("Invalid date format for endDate")
+          );
         }
       },
     },
@@ -37,10 +39,17 @@ const eventSchema = new mongoose.Schema<IEvent>({
         const startDate = this.get("startDate");
 
         if (!validator.isDate(value)) {
-          throw new Error("Invalid date format for endDate");
+          if (!validator.isDate(value)) {
+            throw new APIError(
+              ErrorMap.ValidationError("Invalid date format for endDate")
+            );
+          }
         }
         if (!validator.isAfter(value.toISOString(), startDate?.toISOString())) {
-          throw new Error("Invalid date: End date should be after startDate");
+          let error = ErrorMap.ValidationError(
+            "Invalid date: End date should be after startDate"
+          );
+          throw error;
         }
       },
     },
