@@ -6,7 +6,6 @@ export interface IUser {
   _id: string;
   name: string;
   email: string;
-  phone?: string;
   password: string;
   createdAt: Date;
 }
@@ -23,7 +22,6 @@ const UserSchema = new mongoose.Schema<IUser>({
       }
     },
   },
-  phone: { type: String },
   password: {
     type: String,
     trim: true,

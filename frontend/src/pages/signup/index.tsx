@@ -7,7 +7,6 @@ interface IFormInput {
   name: string;
   email: string;
   password: string;
-  phone?: string;
 }
 
 const Signup = () => {
@@ -25,9 +24,7 @@ const Signup = () => {
       name: data.name,
       email: data.email,
       password: data.password,
-      phone: data?.phone,
     };
-    console.log(userInput);
     try {
       const data = await postRequest("/auth/signup", {
         options: { data: userInput },
@@ -37,19 +34,7 @@ const Signup = () => {
         },
       });
       router.push("/events");
-    } catch {
-      console.log("------------");
-    }
-    //   const { data } = await createUser({ variables: { input: userInput } });
-    //   if (data) {
-    //     showSuccessMessage("User created");
-    //     router.push("/login");
-    //   }
-    // } catch (err: any) {
-    //   showErrorMessage(
-    //     err.response?.data ? err.response.data.error : err.message
-    //   );
-    // }
+    } catch {}
   };
 
   return (
@@ -112,17 +97,7 @@ const Signup = () => {
                 <p className="text-red-500">{errors.password.message}</p>
               )}
             </div>
-            <div>
-              <label className="font-medium">Phone</label>
-              <input
-                {...register("phone")}
-                type="text"
-                className="w-full mt-2 px-3 py-2 text-gray-500 bg-transparent outline-none border focus:border-indigo-600 shadow-sm rounded-lg"
-              />
-              {errors.phone && (
-                <p className="text-red-500">{errors.phone.message}</p>
-              )}
-            </div>
+
             <button className="w-full px-4 py-2 text-white font-medium bg-indigo-600 hover:bg-indigo-500 active:bg-indigo-600 rounded-lg duration-150">
               Create User
             </button>

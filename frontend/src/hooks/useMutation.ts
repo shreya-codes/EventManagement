@@ -47,7 +47,7 @@ const useMutation = () => {
       await onError?.(errorResponse);
       if (axios.isAxiosError(error) && errorResponse) {
         showErrorMessage(
-          errorResponse.response?.data
+          errorResponse.response?.data?.error
             ? errorResponse.response.data.error
             : errorResponse.message
         );

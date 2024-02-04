@@ -12,8 +12,8 @@ const EventList = () => {
   const { deleteRequest, isMutating } = useMutation();
 
   const [reload, setReload] = useState(false);
-  const [editEvent, setEditEvent] = useState({});
-  const [deleteEvent, setDeleteEvent] = useState({});
+  const [editEvent, setEditEvent] = useState<IEvent | {}>({});
+  const [deleteEvent, setDeleteEvent] = useState<IEvent | {}>({});
   const router = useRouter();
 
   const handleEditClick = (event: IEvent) => {
@@ -21,7 +21,6 @@ const EventList = () => {
     setDeleteEvent({});
   };
   const handleDeleteClick = (event: IEvent) => {
-    console.log(event);
     setDeleteEvent(event);
     setEditEvent({});
   };
@@ -35,14 +34,16 @@ const EventList = () => {
   };
   const handleDeleteConfirm = async () => {
     try {
-      await deleteRequest(`/events/${deleteEvent?._id}`, {
-        successMessage: "Event Deleted",
-        onSuccess: () => {
-          setReload(true);
+      if ("_id" in deleteEvent && deleteEvent._id) {
+        await deleteRequest(`/events/${deleteEvent?._id}`, {
+          successMessage: "Event Deleted",
+          onSuccess: () => {
+            setReload(true);
 
-          router.push(`/events`);
-        },
-      });
+            router.push(`/events`);
+          },
+        });
+      }
       handleModalClose();
     } catch (error) {
       console.error("Error deleting event:", error);
@@ -92,7 +93,7 @@ const EventList = () => {
           </tbody>
         </table>
 
-        {editEvent?._id && (
+        {"_id" in editEvent && editEvent._id && (
           <div className="fixed top-0 left-0 flex items-center justify-center bg-black bg-opacity-50">
             <div className="bg-white p-6 sm:p-8 sm:rounded-lg">
               <div>
@@ -108,7 +109,7 @@ const EventList = () => {
           </div>
         )}
 
-        {deleteEvent?._id && (
+        {"_id" in deleteEvent && deleteEvent._id && (
           <div className="fixed top-0 left-0 flex items-center justify-center bg-black bg-opacity-50">
             <DeleteConfirmationModal
               onCancel={handleDeleteCancel}

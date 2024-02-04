@@ -5,7 +5,6 @@ const connectToDatabase = async () => {
     useNewUrlParser: true,
     useUnifiedTopology: true,
   };
-  console.log(database);
   if (!database) {
     console.error(
       "MONGODB_URI environment variable is not defined.",

@@ -16,7 +16,6 @@ const EventsPage = () => {
   } = useFetcher(`${process.env.NEXT_PUBLIC_API_ENDPOINT}/events`);
 
   useEffect(() => {
-    console.log(reload, "------ reerere");
     if (reload) {
       refetch();
       setReload(false);

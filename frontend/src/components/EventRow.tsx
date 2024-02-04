@@ -4,6 +4,10 @@ import { IEvent } from "./EventForm";
 interface IProps {
   event: IEvent;
   index: number;
+  reload?: boolean;
+  setReload?: React.Dispatch<React.SetStateAction<boolean>>;
+  onEditClick: (event: IEvent) => void;
+  onDeleteClick: (event: IEvent) => void;
 }
 
 const EventRow: React.FC<IProps> = ({

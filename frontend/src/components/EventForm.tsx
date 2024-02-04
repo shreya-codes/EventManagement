@@ -5,9 +5,11 @@ import React from "react";
 import useMutation from "../hooks/useMutation";
 
 interface IProps {
-  event?: IEvent;
   action: string;
+  event?: IEvent;
+  reload?: boolean;
   onClose: () => void;
+  setReload?: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 export interface IEvent {
@@ -19,15 +21,7 @@ export interface IEvent {
   endDate: Date;
 }
 
-const EventForm: React.FC<IProps> = ({
-  action,
-  event,
-  onClose,
-  reload,
-  setReload,
-}) => {
-  const router = useRouter();
-  console.log(event?.startDate);
+const EventForm: React.FC<IProps> = ({ action, event, onClose, setReload }) => {
   const {
     register,
     formState: { errors },
@@ -47,7 +41,6 @@ const EventForm: React.FC<IProps> = ({
         : {},
   });
   const startDate = watch("startDate") as Date;
-  const endDate = watch("endDate") as Date;
 
   const { postRequest, putRequest, isMutating } = useMutation();
 
@@ -65,7 +58,7 @@ const EventForm: React.FC<IProps> = ({
           options: { data: eventInput },
           successMessage: "Event Created",
           onSuccess: () => {
-            setReload(true);
+            setReload && setReload(true);
           },
         });
       }
@@ -75,14 +68,12 @@ const EventForm: React.FC<IProps> = ({
           options: { data: eventInput },
           successMessage: "Event Updated",
           onSuccess: () => {
-            setReload(true);
+            setReload && setReload(true);
           },
         });
       }
       onClose();
-    } catch {
-      console.log("------------");
-    }
+    } catch {}
   };
 
   return (

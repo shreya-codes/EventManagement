@@ -20,8 +20,10 @@ const Login = () => {
     await postRequest("/auth/login", {
       options: { data: { email, password } },
       successMessage: "Login Successful",
+      onSuccess(data) {
+        router.push("/events");
+      },
     });
-    router.push("/events");
   };
 
   return (
