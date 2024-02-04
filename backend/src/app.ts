@@ -3,13 +3,20 @@ import "dotenv/config";
 import connectToDatabase from "./config/database";
 import { authRouter, eventRouter } from "./router";
 import cookieParser from "cookie-parser";
-import { errorHandler } from "./middleware";
+import cors from "cors";
+import { errorHandler } from "./middleware/errorHandler";
 // Now you can use authRouter and eventRouter in your code
 
 const app = express();
 const PORT = process.env.PORT || 3001;
 
 app.use(cookieParser());
+app.use(
+  cors({
+    origin: process.env.FRONTEND_ENDPOINT,
+    credentials: true, // Enable sending cookies across origins
+  })
+);
 
 app.use(express.json());
 
@@ -29,7 +36,7 @@ app.use("/events", eventRouter);
 app.use("/auth", authRouter);
 
 // Error Handling Middleware
-// app.use(errorHandler);
+app.use(errorHandler);
 
 app.listen(PORT, () => {
   return console.log(`Express is listening at http://localhost:${PORT}`);
