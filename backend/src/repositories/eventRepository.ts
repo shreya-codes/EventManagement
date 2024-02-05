@@ -55,15 +55,10 @@ const removeEvent = async (id: string) => {
   if (!removedEvent) {
     throw new APIError(
       ErrorMap.NotFoundError("Event"),
-      "raaaaaaaaaaaaa2222aaaaaaaaaaaa",
+      "Error while deleting",
       { _id: id, deleted: { $ne: true } }
     );
   }
-  throw new APIError(
-    ErrorMap.NotFoundError("Event"),
-    `Could not find event with ${{ _id: id, deleted: { $ne: true } }} `,
-    { _id: id, deleted: { $ne: true } }
-  );
 
   return removedEvent;
 };
