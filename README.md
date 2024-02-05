@@ -36,5 +36,5 @@ This design choice enhances code modularity, making it easier to switch between 
 
 ![Create Screenshot](create.png)
 ![Event list](eventlist.png)
-![Login] (login.png)
-![Signup] (signup.png)
+![login ](login.png)
+![Signup](signup.png)
