@@ -10,7 +10,7 @@ const registerUserService = async (userData: IUser) => {
   const existingUser = await getUser({ email: userData.email });
   if (existingUser) {
     throw new APIError(
-      ErrorMap.NotFoundError("User"),
+      ErrorMap.AlreadyExistsError("User"),
       `User already exists with email${userData.email} `
     );
   }

@@ -13,12 +13,6 @@ const getUser = async (selector = {}) => {
     ...selector,
     deleted: { $ne: true },
   });
-  if (!alreadyExistsUser) {
-    throw new APIError(
-      ErrorMap.NotFoundError("User"),
-      `Could not find user with email${{ ...selector }}} `
-    );
-  }
 
   if (!alreadyExistsUser) {
     return false;
