@@ -13,11 +13,9 @@ const Header: React.FC<IProps> = ({ heading }) => {
   const [hasToken, setHasToken] = useState(false);
 
   useEffect(() => {
-    if (typeof document !== "undefined") {
-      const token = document.cookie.includes("token");
-      setHasToken(token);
-    }
-  }, [hasToken]);
+    const token = document.cookie.includes("token");
+    setHasToken(token);
+  }, []);
 
   const handleLogout = async ({}) => {
     await postRequest("/auth/logout", {
@@ -25,6 +23,7 @@ const Header: React.FC<IProps> = ({ heading }) => {
       successMessage: "Logged out Successful",
       onSuccess(data) {
         router.push("/");
+        setHasToken(false);
       },
     });
   };
