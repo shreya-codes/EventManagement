@@ -21,7 +21,7 @@ const Login = () => {
       options: { data: { email, password } },
       successMessage: "Login Successful",
       onSuccess(data) {
-        router.push("/events");
+        router.push("/");
       },
     });
   };

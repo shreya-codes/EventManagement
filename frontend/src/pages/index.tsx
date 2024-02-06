@@ -1,22 +1,13 @@
 import type { NextPage } from "next";
-import Head from "next/head";
-import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Header from "../components/Header";
-import EventList from "../components/EventList";
+import Event from "../components/Events";
 const Home: NextPage = () => {
   return (
     <div>
-      <Header
-        heading="Event Mangement System"
-        actionItems={[
-          { title: "Login", directTo: "/login" },
-          { title: "signup", directTo: "/signup" },
-        ]}
-      />
-
+      <Header heading="Event Mangement System" />
       <main>
-        <EventList />
+        <Event />
       </main>
     </div>
   );

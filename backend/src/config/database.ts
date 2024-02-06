@@ -10,7 +10,7 @@ const connectToDatabase = async () => {
       "MONGODB_URI environment variable is not defined.",
       options as ConnectOptions
     );
-    process.exit(1); // Exit the process or handle the error appropriately
+    process.exit(1);
   }
 
   try {
